@@ -1,3 +1,8 @@
 # im2_ggimvorarlberg
 
-## Titel: öppis mit Schuss
+## Titel
+something with schuss
+
+## Ideen
+- nach zutaten suchen und passenden Drink ausgeben
+- lieblingsdrinks
