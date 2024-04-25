@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Öppis Mit Schuss</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <favicon href="favicon.ico">
 </head>
-
 
 
 <body class="index">
 
   <header>
-    <h1>Drink of the Day</h1>
+    <h1>öppis mit Schuss</h1>
     <nav>
       <ul>
         <li><a href="#">Random Drink of the Day</a></li>
@@ -22,12 +22,40 @@
     </nav>
   </header>
 
+  <main>
+
+  <!-- Random Drink of the Day-->
+  <section>
+    <h2>zuefälligs Gsöff vom Tag</h2>
+    <p id="drinkName"></p>
+    <p id="drinkInstructions"></p>
+    <ul id="drinkIngredients"></ul>
+  </section>
+
+  <!-- Personal Drink of the Day-->
+  <section>
+    <h2>diis persönlichs Gsöff</h2>
+    <label for="nameInput">Wie heissisch du:</label>
+    <input type="text" id="nameInput">
+    <button onclick="fetchPersonalDrink()">gib ihm</button>
+    <div id="personalDrink"></div>
+  </section>
+
+  <!-- Leftover Drink -->
+  <section>
+    <h2>überblibs Gsöff</h2>
+    <label for="ingredientsInput">Was hesch no vorig:</label>
+    <input type="text" id="ingredientsInput">
+    <button onclick="searchCocktails()">Search</button>
+    <ul id="cocktailList"></ul>
+  </section>
   
+</main>
 
-  
+<footer>
+  <p>&copy; 2024 by öppis mit Schuss GmbH</p>
+</footer>
 
-
-
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
