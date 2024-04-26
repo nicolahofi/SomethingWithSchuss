@@ -5,6 +5,7 @@
 
 // Überprüfen, ob der heutige zufällige Drink bereits im LocalStorage gespeichert ist
 const today = new Date().toISOString().slice(0, 10);
+
 const storedDrink = JSON.parse(localStorage.getItem(today));
 if (storedDrink) {
     // display the stored drink
@@ -12,7 +13,9 @@ if (storedDrink) {
 } else {
     // fetch a new random drink
     const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-    fetchData(apiUrl);
+    // let drink = fetchData(apiUrl);
+    // console.log(drink);
+    //localStorage.setItem(today, JSON.stringify(drink));
 }
 
 // Funktion zum Anzeigen des zufälligen Getränks auf der Seite
@@ -34,7 +37,6 @@ function displayDrink(drink) {
   document.getElementById('drinkInstructions').textContent = `Zubereitung: ${instructions}`;
   document.getElementById('drinkIngredients').innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
 }
-
 
 
 /*
@@ -72,7 +74,8 @@ async function fetchPersonalDrink() {
     const ingredients = [];
     for (let i = 1; i <= 15; i++) {
       const ingredient = drink['strIngredient' + i];
-      const measure = drink['strMeasure' + i];
+      let measure = drink['strMeasure' + i];
+      measure = converter(measure);
       if (ingredient && measure) {
         ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
       }
@@ -84,6 +87,16 @@ async function fetchPersonalDrink() {
       <ul>${ingredients.map(ingredient => `<li>${ingredient}</li>`).join('')}</ul>
     `;
   }
+
+function converter(measure) {
+  if (measure && measure.toLowerCase().includes('oz')) {
+    return measure.replace('oz', 'ml');
+  } 
+  return measure;
+}
+
+
+
 
 
 
@@ -123,9 +136,6 @@ async function fetchPersonalDrink() {
     });
   }
 
-
-
-
 // get data from api
 async function fetchData(url) {
     try {
@@ -138,4 +148,5 @@ async function fetchData(url) {
         console.log(error);
         return null;
     }
-}
+  }
+
