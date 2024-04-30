@@ -12,10 +12,15 @@ if (storedDrink) {
   displayDrink(storedDrink);
 } else {
     // fetch a new random drink
-    const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-    // let drink = fetchData(apiUrl);
-    // console.log(drink);
-    //localStorage.setItem(today, JSON.stringify(drink));
+    fetchRandomDrink();
+}
+
+async function fetchRandomDrink() {
+  const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+    let data = await fetchData(apiUrl);
+    // store the drink in local storage
+    localStorage.setItem(today, JSON.stringify(data.drinks[0]));
+    displayDrink(data.drinks[0]);
 }
 
 // Funktion zum Anzeigen des zufälligen Getränks auf der Seite
@@ -147,6 +152,5 @@ async function fetchData(url) {
     catch (error) {
         console.log(error);
         return null;
-    }
   }
 
