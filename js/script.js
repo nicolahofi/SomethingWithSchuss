@@ -153,4 +153,4 @@ async function fetchData(url) {
         console.log(error);
         return null;
   }
-
+}
