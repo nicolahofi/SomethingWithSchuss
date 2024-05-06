@@ -13,13 +13,6 @@
 
   <header>
     <h1>öppis mit Schuss</h1>
-    <nav>
-      <ul>
-        <li><a href="#">Random Drink of the Day</a></li>
-        <li><a href="#">Personal Drink of the Day</a></li>
-        <li><a href="#">Leftover Drink of the Day</a></li>
-      </ul>
-    </nav>
   </header>
 
   <main>
@@ -28,6 +21,7 @@
   <section>
     <h2>zuefälligs Gsöff vom Tag</h2>
     <p id="drinkName"></p>
+    <img id="drinkImage" src="" alt="Drink Image">
     <p id="drinkInstructions"></p>
     <ul id="drinkIngredients"></ul>
   </section>
@@ -38,7 +32,10 @@
     <label for="nameInput">Wie heissisch du:</label>
     <input type="text" id="nameInput">
     <button onclick="fetchPersonalDrink()">gib ihm</button>
-    <div id="personalDrink"></div>
+
+    <p id="persDrinkName"></p>
+    <p id="persDrinkInstructions"></p>
+    <ul id="persDrinkIngredients"></ul>
   </section>
 
   <!-- Leftover Drink -->
@@ -46,14 +43,16 @@
     <h2>überblibs Gsöff</h2>
     <label for="ingredientsInput">Was hesch no vorig:</label>
     <input type="text" id="ingredientsInput">
-    <button onclick="searchCocktails()">Search</button>
-    <ul id="cocktailList"></ul>
+    <button onclick="searchCocktails()">gib ihm</button>
+    
+    <div id="cocktailTable"></div>
+    <br>
   </section>
   
 </main>
 
 <footer>
-  <p>&copy; 2024 by öppis mit Schuss GmbH lol</p>
+  <p>&copy; 2024 by öppis mit Schuss GmbH</p>
 </footer>
 
   <script src="js/script.js"></script>
