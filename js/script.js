@@ -149,7 +149,7 @@ function displayPersonalDrink(drink, name) {
   document.getElementById('persDrinkImgDiv').appendChild(persDrinkImg);
   // document.getElementById('persDrinkName').textContent = `Diis persönlicha Gsöff für ${name}: ${drinkName}`;
   document.getElementById('persDrinkName').textContent = `${drinkName}`;
-  document.getElementById('persDrinkInstructions').textContent = `Zubereitung: ${instructions}`;
+  document.getElementById('persDrinkInstructions').textContent = `${instructions}`;
   document.getElementById('persDrinkIngredients').innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
 }
 
@@ -252,6 +252,10 @@ function displayCocktails(drinks) {
   nameLink.href = '#';
   nameLink.textContent = drink.strDrink;
 
+  // add br tag
+  let br = document.createElement('br');
+  drinkDiv.appendChild(br);
+
   let detailsVisible = false;
   let detailsElement = null;
 
@@ -266,9 +270,10 @@ function displayCocktails(drinks) {
 
       let instruction = document.createElement('p');
       let insturction = details.strInstructionsDE ? details.strInstructionsDE : details.strInstructions;
-      instruction.innerHTML = `<p>Zubereitung: ${insturction}</p>`;
+      instruction.innerHTML = `<h4>Zubereitung</h4><p style='color: #888;'>${insturction}</p>`;
+
       let ingredientsList = document.createElement('ul');
-      ingredientsList.innerHTML = getIngredientsList(details);
+      ingredientsList.innerHTML = `<h4 style='color: white;'>Zutaten</h4>`+ getIngredientsList(details);
 
       detailsElement.appendChild(instruction);
       detailsElement.appendChild(ingredientsList);

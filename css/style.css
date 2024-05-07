@@ -301,17 +301,10 @@ section {
   #cocktailTable {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 90%;
+    justify-content: center;
+    width: 80%;
     margin-left: 10%;
     margin-right: 10%;
-  }
-  
-  #cocktailTable {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 80%;
   }
   
   .drink {
@@ -321,23 +314,18 @@ section {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flow;
-    align-items: center;
-    justify-content: center;
   }
   
   .drink img {
-    width: 100px;
+    width: 200px;
     height: auto;
     margin-bottom: 10px;
-    flex: 1;
   }
   
   .drink a {
     font-size: 18px;
     color: white;
     text-decoration: none;
-    flex: 1;
   }
   
   .drink a:hover {
