@@ -1,257 +1,333 @@
+/*
+    general init function
+ */
+async function init() {
+  // Fetch the ingredients once when the page loads
+  ingredients = await fetchAllIngredients();
 
-/* 
-  RANDOM DRINK OF THE DAY
-*/
+  // Fetch and display a random drink
+  fetchRandomDrink();
 
-// Überprüfen, ob der heutige zufällige Drink bereits im LocalStorage gespeichert ist
-const today = new Date().toISOString().slice(0, 10);
+  // Clear old localStorage entries
+  clearOldLocalStorage();
 
-const storedDrink = JSON.parse(localStorage.getItem(today));
-if (storedDrink) {
-    // display the stored drink
-  displayDrink(storedDrink);
-} else {
-    // fetch a new random drink
-    fetchRandomDrink();
+  // Event listeners
+  ingredientInfoBtn.addEventListener('mouseover', function() {
+    if (ingredients) {
+      ingredientInfoBox.innerHTML = "<b>mögliche Zutaten:</b> " + ingredients;
+      ingredientInfoBox.style.display = 'block'; // Show the info box
+    }
+  });
+
+  ingredientInfoBtn.addEventListener('mouseout', function() {
+    ingredientInfoBox.style.display = 'none'; // Hide the info box
+  });
+
+  let fetchPersonBtn = document.querySelector('#personalDrinkButton');
+  fetchPersonBtn.addEventListener('click', fetchPersonalDrink);
+
+  let searchCocktailsByIngredient = document.querySelector('#searchCocktailsByIngredient');
+  searchCocktailsByIngredient.addEventListener('click', searchCocktails);
+
+  document.querySelector('#personalArea').style.display = 'none';
 }
 
+init();
+
+
+// Function to remove localStorage entries older than a week
+function clearOldLocalStorage() {
+  let aWeekAgo = new Date();
+  aWeekAgo.setDate(aWeekAgo.getDate() - 7);
+
+  for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      let keyDate = new Date(key);
+
+      if (keyDate < aWeekAgo) {
+          localStorage.removeItem(key);
+          i--;
+      }
+  }
+}
+
+// Function to fetch and display a random drink
 async function fetchRandomDrink() {
-  const apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
-    let data = await fetchData(apiUrl);
-    // store the drink in local storage
-    localStorage.setItem(today, JSON.stringify(data.drinks[0]));
-    displayDrink(data.drinks[0]);
+  let today = new Date().toISOString().slice(0, 10);
+  let storedDrink = JSON.parse(localStorage.getItem(today));
+
+  if (storedDrink) {
+      displayDrink(storedDrink);
+  } else {
+      let apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+      let data = await fetchData(apiUrl);
+      localStorage.setItem(today, JSON.stringify(data.drinks[0]));
+      displayDrink(data.drinks[0]);
+  }
 }
 
-// Funktion zum Anzeigen des zufälligen Getränks auf der Seite
+// Function to display a drink
 function displayDrink(drink) {
-    // get infos from drink object
   let drinkImage = drink.strDrinkThumb;
   let drinkName = drink.strDrink;
-  let instructions = drink.strInstructionsDE;
+  let instructions = drink.strInstructionsDE ? drink.strInstructionsDE : drink.strInstructions;
   let ingredients = [];
+
   for (let i = 1; i <= 15; i++) {
-    let ingredient = drink['strIngredient' + i];
-    let measure = drink['strMeasure' + i];
-    measure = converter(measure);
-    if (ingredient && measure) {
-      ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
-    }
+      let ingredient = drink['strIngredient' + i];
+      let measure = drink['strMeasure' + i];
+      measure = converter(measure);
+
+      if (ingredient && measure) {
+          ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
+      }
   }
 
-  // display drink on page
   document.getElementById('drinkImage').src = drinkImage;
-  document.getElementById('drinkName').textContent = `Gsöff vom Tag: ${drinkName}`;
-  document.getElementById('drinkInstructions').textContent = `Zubereitung: ${instructions}`;
+  document.getElementById('drinkName').textContent = `${drinkName}`;
+  document.getElementById('drinkInstructions').textContent = `${instructions}`;
   document.getElementById('drinkIngredients').innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
 }
 
 
 /*
-  SEARCH DRINK BY NAME
-*/
-
-// Funktion zum Abrufen eines personalisierten Drinks von der CocktailDB-API basierend auf dem eingegebenen Vornamen
+    Function to fetch and display a personalized drink
+ */
 async function fetchPersonalDrink() {
 
-    // get name from input field
-    const name = document.getElementById('nameInput').value.trim();
-    if (!name) {
-      alert('Please enter your first name.');
-      return;
-    }
-    let firstLetter = name.charAt(0).toLowerCase();
-    let apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${firstLetter}`;
+  document.querySelector('#personalArea').style.display = 'block';
+  let name = document.getElementById('nameInput').value.trim();
 
-    let data = await fetchData(apiUrl);
-    drinks = data.drinks;
-    if (drinks && drinks.length > 0) {
-      let randomIndex = Math.floor(Math.random() * drinks.length);
-      let drink = drinks[randomIndex];
-      displayPersonalDrink(drink);
-    } else {
-      document.getElementById('personalDrink').textContent = `Tschuldigung, ${name} hüt gits nüt für di.`;
-    }
-
+  if (!name) {
+      document.getElementById('persDrinkError').textContent = `Gib din nama ii.`;
+      document.querySelector('#personalArea').style.display = 'none';
+  } else {
+      document.getElementById('persDrinkError').textContent = '';
   }
 
-  // Funktion zum Anzeigen des personalisierten Getränks auf der Seite
-  function displayPersonalDrink(drink) {
-    let drinkName = drink.strDrink;
-    let instructions = drink.strInstructionsDE;
-    let ingredients = [];
-    for (let i = 1; i <= 15; i++) {
+  let firstLetter = name.charAt(0).toLowerCase();
+  let apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${firstLetter}`;
+  let data = await fetchData(apiUrl);
+  let drinks = data.drinks;
+
+  if (drinks && drinks.length > 0) {
+      let randomIndex = Math.floor(Math.random() * drinks.length);
+      let drink = drinks[randomIndex];
+      displayPersonalDrink(drink, name);
+  } else {
+      document.getElementById('persDrinkName').textContent = `Tschuldigung, ${name} hüt gits nüt für di.`;
+  }
+}
+
+// Function to display a personalized drink
+function displayPersonalDrink(drink, name) {
+  let drinkName = drink.strDrink;
+  let instructions = drink.strInstructionsDE ? drink.strInstructionsDE : drink.strInstructions;
+  let ingredients = [];
+
+  for (let i = 1; i <= 15; i++) {
       let ingredient = drink['strIngredient' + i];
       let measure = drink['strMeasure' + i];
       measure = converter(measure);
+
       if (ingredient && measure) {
-        ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
+          ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
       }
-    }
-
-    // drink
-
-    let persDrinkImg = document.getElementById('persDrinkImg');
-    if (persDrinkImg) {
-      persDrinkImg.remove();
-    }
-    persDrinkImg = document.createElement('img');
-    persDrinkImg.id = 'persDrinkImg';
-    persDrinkImg.src = drink.strDrinkThumb;
-    persDrinkImg.alt = drinkName;
-
-    // display drink on page
-    document.getElementById('persDrinkName').insertAdjacentElement('afterend', persDrinkImg);
-    document.getElementById('persDrinkName').textContent = `Diis persönlicha Gsöff für ${document.getElementById('nameInput').value.trim()}: ${drinkName}`;
-    document.getElementById('persDrinkInstructions').textContent = `Zubereitung: ${instructions}`;
-    document.getElementById('persDrinkIngredients').innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
-
-
   }
 
-function converter(measure) {
-  if (measure && measure.toLowerCase().includes('oz')) {
-    return measure.replace('oz', 'ml');
-  } 
-  return measure;
+  // remove img if already existing
+  let existingImg = document.getElementById('persDrinkImg');
+  if (existingImg) {
+    existingImg.remove();
+  }
+
+  let persDrinkImg = document.createElement('img');
+  persDrinkImg.id = 'persDrinkImg';
+  persDrinkImg.src = drink.strDrinkThumb;
+  persDrinkImg.alt = drinkName;
+
+  document.getElementById('persDrinkImgDiv').appendChild(persDrinkImg);
+  // document.getElementById('persDrinkName').textContent = `Diis persönlicha Gsöff für ${name}: ${drinkName}`;
+  document.getElementById('persDrinkName').textContent = `${drinkName}`;
+  document.getElementById('persDrinkInstructions').textContent = `Zubereitung: ${instructions}`;
+  document.getElementById('persDrinkIngredients').innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
 }
 
 
 
 
+// get all possible ingredients for the info box
 
+let ingredientInfoBtn = document.querySelector('#info-icon');
+let ingredientInfoBox = document.querySelector('#info-ingredients'); // Assuming you have an element to display the info
+let ingredients = null;
 
-  /*
-    LEFTOVER DRINK BY INGREDIENTS
-  */
+async function fetchAllIngredients() {
+  const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const data = await fetchData(url);
+  const drinks = data.drinks;
 
-  // Funktion zum Suchen von Cocktails basierend auf den eingegebenen Zutaten
-  async function searchCocktails() {
-    let ingredientsInput = document.getElementById('ingredientsInput').value.trim();
-    if (!ingredientsInput) {
-        document.getElementById('cocktailList').innerHTML = '<li>No cocktails found with the specified ingredient.</li>';
-      return;
-    }
-    let ingredients = ingredientsInput.split(',').map(ingredient => ingredient.trim());
+  let ingredients = new Set();
 
-    // API-Anfrage für Cocktails mit den angegebenen Zutaten
-    let allDrinks = [];
-    for (let ingredient of ingredients) {
-      let apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
-      let data = await fetchData(apiUrl);
-      if (data !== null) {
-        allDrinks = allDrinks.concat(data.drinks);
+  drinks.forEach(drink => {
+    for (let i = 1; i <= 15; i++) {
+      let ingredient = drink['strIngredient' + i];
+      if (ingredient) {
+        ingredients.add(ingredient.trim().toLowerCase());
       }
     }
-
-    let finalDrinks = allDrinks.filter(drink => {
-      let count = allDrinks.filter(d => d.strDrink === drink.strDrink).length;
-      return count === ingredients.length;
-    });
-
-    // remove duplicates
-    let uniqueFinalDrinks = finalDrinks.filter((drink, index) => {
-      return index === finalDrinks.findIndex(d => d.strDrink === drink.strDrink);
-    });
-    
-    if (uniqueFinalDrinks.length === 0) {
-      // Error handling
-      document.getElementById('cocktailTable').innerText = 'Mit dera Zuatat gits kai Gsöff. (du alki)';
-    } else {
-      displayCocktails(uniqueFinalDrinks);
-    }
-  }
-
-  // Funktion zum Anzeigen der gefundenen Cocktails
-  function displayCocktails(drinks) {
-    let cocktailTable = document.getElementById('cocktailTable');
-    cocktailTable.innerHTML = ''; // Clear previous results
-
-    let table = document.createElement('table');
-    let tbody = document.createElement('tbody');
-
-    drinks.forEach(function(drink) {
-      let row = document.createElement('tr');
-
-      // Bild
-      let drinkCell = document.createElement('td');
-      let image = document.createElement('img');
-      image.src = drink.strDrinkThumb;
-      image.alt = drink.strDrink + " Image";
-      drinkCell.appendChild(image);
-
-      // Name (Link)
-      let nameLink = document.createElement('a');
-      // nameLink.href = drink.idDrink;
-      nameLink.href = '#';
-      nameLink.textContent = drink.strDrink;
-
-      let detailsVisible = false;
-      let detailsElement = null;
-
-      nameLink.addEventListener('click', async function(e) {
-        e.preventDefault();
-        if (!detailsVisible) {
-
-          let apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drink.idDrink}`;
-          let data = await fetchData(apiUrl);
-          let details = data.drinks[0];
-  
-          detailsElement = document.createElement('div');
-
-          let instructions = details.strInstructionsDE;
-          let ingredients = [];
-          for (let i = 1; i <= 15; i++) {
-            let ingredient = details['strIngredient' + i];
-            let measure = details['strMeasure' + i];
-            measure = converter(measure);
-            if (ingredient && measure) {
-              ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
-            }
-          }
-      
-      
-          // display drink on page
-          let instruction = document.createElement('p');
-          instruction.innerHTML = `<p>Zubereitung: ${instructions}</p>`;
-          let ingredientsList = document.createElement('ul');
-          ingredientsList.innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
-
-          detailsElement.appendChild(instruction);
-          detailsElement.appendChild(ingredientsList);
-
-          nameLink.parentElement.appendChild(detailsElement);
-
-          detailsVisible = true;
-        } else {
-          detailsElement.remove();
-          detailsVisible = false;
-        }
-        
-
-      });
-
-      drinkCell.appendChild(nameLink);
-
-      row.appendChild(drinkCell);
-
-      tbody.appendChild(row);
   });
 
-  table.appendChild(tbody);
-  cocktailTable.appendChild(table);
+  let ingredientsArray = Array.from(ingredients);
+  let ingredientsString = ingredientsArray.join(', ');
+  return ingredientsString;
+}
+
+// Fetch the ingredients once when the page loads
+window.addEventListener('load', async function() {
+  ingredients = await fetchAllIngredients();
+});
+
+
+
+
+/*
+    Function to search cocktails by ingredients
+ */
+
+async function searchCocktails() {
+  let ingredientsInput = document.getElementById('ingredientsInput').value.trim();
+
+  if (!ingredientsInput) {
+      document.getElementById('leftoverDrinkError').innerText = 'muasch zerst öppis iigeh';
+      return;
+  } else {
+      document.getElementById('leftoverDrinkError').innerText = '';
   }
 
-// get data from api
-async function fetchData(url) {
-    try {
-        let response = await fetch(url);
-        let data = await response.json();
-        console.log(data);
-        return data;
+  let ingredients = ingredientsInput.split(',').map(ingredient => ingredient.trim());
+  let allDrinks = [];
+
+  for (let ingredient of ingredients) {
+      let apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`;
+      let data = await fetchData(apiUrl);
+
+      if (data) {
+          allDrinks = allDrinks.concat(data.drinks);
+      }
+  }
+
+  let finalDrinks = allDrinks.filter(drink => {
+      let count = allDrinks.filter(d => d.strDrink === drink.strDrink).length;
+      return count === ingredients.length;
+  });
+
+  let uniqueFinalDrinks = finalDrinks.filter((drink, index) => index === finalDrinks.findIndex(d => d.strDrink === drink.strDrink));
+
+  if (uniqueFinalDrinks.length === 0) {
+      document.getElementById('leftoverDrinkError').innerText = 'Mit dera Zuatat gits kai Gsöff. (du alki)';
+  } else {
+      displayCocktails(uniqueFinalDrinks);
+  }
+}
+
+
+
+
+// Function to display found cocktails
+function displayCocktails(drinks) {
+  let cocktailContainer = document.getElementById('cocktailTable');
+  cocktailContainer.innerHTML = ''; // Clear previous results
+
+ drinks.forEach(drink => {
+  let drinkDiv = document.createElement('div');
+  drinkDiv.classList.add('drink');
+
+  let image = document.createElement('img');
+  image.src = drink.strDrinkThumb;
+  image.alt = drink.strDrink + " Image";
+  drinkDiv.appendChild(image);
+
+  let nameLink = document.createElement('a');
+  nameLink.href = '#';
+  nameLink.textContent = drink.strDrink;
+
+  let detailsVisible = false;
+  let detailsElement = null;
+
+  nameLink.addEventListener('click', async function(e) {
+    e.preventDefault();
+
+    if (!detailsVisible) {
+      let apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drink.idDrink}`;
+      let data = await fetchData(apiUrl);
+      let details = data.drinks[0];
+      detailsElement = document.createElement('div');
+
+      let instruction = document.createElement('p');
+      let insturction = details.strInstructionsDE ? details.strInstructionsDE : details.strInstructions;
+      instruction.innerHTML = `<p>Zubereitung: ${insturction}</p>`;
+      let ingredientsList = document.createElement('ul');
+      ingredientsList.innerHTML = getIngredientsList(details);
+
+      detailsElement.appendChild(instruction);
+      detailsElement.appendChild(ingredientsList);
+      nameLink.parentElement.appendChild(detailsElement);
+
+      detailsVisible = true;
+    } else {
+      detailsElement.remove();
+      detailsVisible = false;
     }
-    catch (error) {
-        console.log(error);
-        return null;
+  });
+
+  drinkDiv.appendChild(nameLink);
+  cocktailContainer.appendChild(drinkDiv);
+});
+
+}
+
+function getIngredientsList(details) {
+  let ingredients = [];
+  for (let i = 1; i <= 15; i++) {
+    let ingredient = details['strIngredient' + i];
+    let measure = details['strMeasure' + i];
+    measure = converter(measure);
+    if (ingredient && measure) {
+      ingredients.push(`<li>${measure.trim()} ${ingredient.trim()}</li>`);
+    }
+  }
+  return ingredients.join('');
+}
+
+// Function to convert measure units
+function converter(measure) {
+  if (measure && measure.toLowerCase().includes('oz')) {
+    measure = measure.replace('oz', '').trim();
+    if (measure == "1/2") measure = 0.5;
+    let number = parseFloat(measure);
+    if (!isNaN(number)) {
+      let convertedMeasure = number * 29.5735;
+      convertedMeasure = Math.ceil(convertedMeasure / 5) * 5;
+      return `${convertedMeasure} ml`;
+    }
+  }
+  if (measure && measure.toLowerCase().includes('tsp')) {
+    measure = measure.replace('tsp', 'Teelöfel').trim();
+  }
+
+  return measure;
+}
+
+// Function to fetch data from API
+async function fetchData(url) {
+  try {
+      let response = await fetch(url);
+      let data = await response.json();
+      console.log(data);
+      return data;
+  } catch (error) {
+      console.log(error);
+      return null;
   }
 }

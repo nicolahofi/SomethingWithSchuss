@@ -1,58 +1,376 @@
 /* Allgemeine Stildefinitionen */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f8f8f8;
     color: #333;
+    min-height: 100vh;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+main {
+    background-color: black;
 }
+  /*
+        HEADER
+  */
 
-/* Header */
-header {
+header{
     background-color: #333;
     color: #fff;
     padding: 20px;
 }
 
-header h1 {
-    margin: 0;
+h1{
+    text-align: center;
 }
 
 /* Hauptinhalt */
 main {
-    padding: 20px 0;
+    padding: 40px;
 }
 
 section {
-    background-color: #fff;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    background-color: #f9f9f9;
     padding: 20px;
-}
-
-section h2 {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 50px;
+  }
+  
+  h2 {
     color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+
+/* randomDrink */
+
+#randomDrink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  #randomDrink img {
+    width: 250px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  .nameImg{
+    display: flex;
+  }
+  .insIng{
+      display: flex;
+  }
+
+  .titleAndContent{
+      flex: 1;
+      padding: 1%;
+      background-color: black;
+      border-radius: 10px;
+      margin: 1%;
+      color: white;
+      width: 500px;
+  }
+
+  .titleAndContentCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+
+  #drinkName {
+    font-size: 40px;
+    color: white;
+    text-align: center;
+  }
+
+  #drinkInstructions {
+    font-size: 18px;
+    color: #888;
+    text-align: center;
+  }
+
+  #drinkIngredients {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 20px;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #drinkIngredients li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  #drinkIngredients li:last-child {
+    border-bottom: none;
+  }
+
+ 
+/* personalize Drink */
+
+#persDrink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  text-align: center;
 }
 
-section img {
-    max-width: 100%;
+#persDrinkName {
+  font-size: 40px;
+  color: white;
+  text-align: center;
+}
+
+#persDrinkImgDiv img {
+  width: 250px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+#persDrinkInstructions {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
+}
+
+#persDrinkIngredients {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 20px;
+  list-style-type: none;
+  padding: 0;
+}
+
+#persDrinkIngredients li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+#persDrinkIngredients li:last-child {
+  border-bottom: none;
+}
+
+
+
+
+  
+  label {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  input[type="text"] {
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 14px;
+    vertical-align: baseline;
+    font-weight: 400;
+    line-height: 1.29;
+    letter-spacing: .16px;
+    border-radius: 0;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    width: 20%;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid #8d8d8d;
+    background-color: #f4f4f4;
+    padding: 16px 16px;
+    margin-top: 10px;
+    color: #161616;
+    transition: background-color 70ms cubic-bezier(.2,0,.38,.9),outline 70ms cubic-bezier(.2,0,.38,.9);  
+    :focus{
+        outline: 2px solid #0f62fe;
+        outline-offset: -2px;
+    }
+
+  }
+
+.errortext {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+  .button {
+    align-self: center;
+    background-color: #fff;
+    background-image: none;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    color: #41403e;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Neucha, sans-serif;
+    font-size: 1rem;
+    line-height: 23px;
+    outline: none;
+    padding: .75rem;
+    text-decoration: none;
+    transition: all 235ms ease-in-out;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin: 15px;
+    margin-top: 0px;
+  }
+  
+  .button:hover {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
+  }
+  
+  .button:focus {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+  }
+
+
+
+
+
+
+  /*
+        LEFTOVER
+  */
+
+
+  /*  info icon */
+  #info-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 3%;
+  }
+
+  #info-ingredients {
+    font-size: 13px;
+    background-color: lightgrey;
+    padding: 8px;
+    margin-left: 25%;
+    color: #333;
+    border-radius: 5px;
+    width: 60%;
+    position: absolute; 
+    z-index: 1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  }
+
+
+  #leftoverdrink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  
+  #cocktailTable {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 90%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  
+  #cocktailTable {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 80%;
+  }
+  
+  .drink {
+    width: calc(27% - 10px);
+    margin: 10px;
+    background-color: black;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flow;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .drink img {
+    width: 100px;
     height: auto;
     margin-bottom: 10px;
-}
+    flex: 1;
+  }
+  
+  .drink a {
+    font-size: 18px;
+    color: white;
+    text-decoration: none;
+    flex: 1;
+  }
+  
+  .drink a:hover {
+    text-decoration: underline;
+  }
+  
+  .drink div {
+    margin-top: 10px;
+  }
+  
+  .drink p {
+    color: white;
+  }
 
-section p {
-    margin-bottom: 10px;
-}
 
-section ul {
-    padding-left: 20px;
-}
+
+  .drink ul {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 20px;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .drink ul li {
+    color: #888;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .drink ul li:last-child {
+    border-bottom: none;
+  }
 
 /* Footer */
 footer {
@@ -60,28 +378,4 @@ footer {
     color: #fff;
     text-align: center;
     padding: 20px;
-}
-
-/* Zusätzliche Anpassungen */
-input[type="text"], button {
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-input[type="text"]:focus, button:focus {
-    outline: none;
-    border-color: #4CAF50;
-    box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
 }

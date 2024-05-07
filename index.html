@@ -18,32 +18,80 @@
   <main>
 
   <!-- Random Drink of the Day-->
-  <section>
-    <h2>zuefälligs Gsöff vom Tag</h2>
-    <p id="drinkName"></p>
-    <img id="drinkImage" src="" alt="Drink Image">
-    <p id="drinkInstructions"></p>
-    <ul id="drinkIngredients"></ul>
+  <section id="randomDrink">
+    <h2>Gsöff vom Tag</h2>
+
+    <div class="nameImg">
+      
+      <div class="titleAndContent titleAndContentCenter">
+        <p id="drinkName"></p>
+      </div>
+
+      <div class="titleAndContent">
+        <img id="drinkImage" src="" alt="Drink Image">
+      </div>
+      
+    </div>
+
+    <div class="insIng">
+      <div class="titleAndContent">
+        <h3>Zubereitung</h3>
+        <p id="drinkInstructions"></p>
+      </div>
+      <div class="titleAndContent">
+        <h3>Zutaten</h3>
+        <ul id="drinkIngredients"></ul>
+      </div>
+    </div>
+    
   </section>
 
   <!-- Personal Drink of the Day-->
-  <section>
+  <section id="persDrink">
     <h2>diis persönlichs Gsöff</h2>
     <label for="nameInput">Wie heissisch du:</label>
     <input type="text" id="nameInput">
-    <button onclick="fetchPersonalDrink()">gib ihm</button>
+    <p class="errortext" id="persDrinkError"></p>
 
-    <p id="persDrinkName"></p>
-    <p id="persDrinkInstructions"></p>
-    <ul id="persDrinkIngredients"></ul>
+    <button id="personalDrinkButton" class="button" role="button">gib ihm</button>
+
+    <div id="personalArea">
+      <div class="nameImg">
+      
+        <div class="titleAndContent titleAndContentCenter">
+          <p id="persDrinkName"></p>
+        </div>
+  
+        <div class="titleAndContent">
+          <div id="persDrinkImgDiv"></div>
+        </div>
+        
+      </div>
+  
+      <div class="insIng">
+        <div class="titleAndContent">
+          <h3>Zubereitung</h3>
+          <p id="persDrinkInstructions"></p>
+        </div>
+        <div class="titleAndContent">
+          <h3>Zutaten</h3>
+          <ul id="persDrinkIngredients"></ul>
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <!-- Leftover Drink -->
-  <section>
-    <h2>überblibs Gsöff</h2>
+  <section id="leftoverdrink">
+    <p id="info-ingredients" style="display: none;"></p>
+    <nobr><h2>überblibs Gsöff<span id="info-icon">i</span></h2></nobr>
     <label for="ingredientsInput">Was hesch no vorig:</label>
+
     <input type="text" id="ingredientsInput">
-    <button onclick="searchCocktails()">gib ihm</button>
+    <p class="errortext" id="leftoverDrinkError"></p>
+    
+    <button id="searchCocktailsByIngredient" class="button" role="button">gib ihm</button>
     
     <div id="cocktailTable"></div>
     <br>
