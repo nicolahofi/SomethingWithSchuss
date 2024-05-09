@@ -25,12 +25,4 @@ Was eine API ist und wie mit einer API umgegangen wird, haben wir ebenfalls wäh
  
 ## Benutzte Ressourcen
 Als Hilfsmittel haben wir hauptsächlich den Github Copilot benutzt. Dieser unterstützte uns in fast allen Arbeitsschritten und verschnellerte den Arbeitsprozess enorm. Insbesondere Funktionen, die für uns neu waren, wie zum Beispiel das Vergleichen zweier Arrays, stützten wir uns stark auf Codekombinationen von ChatGPT. Als zusätzliches Hilfsmittel haben uns Seiten wie https://www.w3schools.com weitergeholfen. Nicht nur für das Coden selbst, sondern auch für das Nachvollziehen vom geschriebenen Code setzten wir auf KI-Tools.
-Abgesehen von Hilfsmittel aus dem Internet halfen uns die Codes aus dem Unterricht. Insbesondere aus der Vorlesung „Live Coding der Pokémon-Seite“ konnten Codeteile kopiert und in abgeänderte Art auf unserer Seite integriert werden. So kam ein Arbeitsprozess zustande, der effizient war und durch diverse Hilfsmittel optimiert wurde. 
-
-## Teamtexte
-## Adrian – Senior developer
-Adrian übernahm die Rolle unseres virtuellen Barkeepers. Er sorgte dafür, dass die Bar ein funktionierendes und vollumfängliches Erlebnis bietet. Als Inhaber der Bar hatte er stets den Überblick und alles im Griff. (Project Lead, Developer, King of JavaScript)
-## Nicola – Junior developer
-Während Adrian die Cocktails mixte, sorgte Nicola dafür, dass die Gäste einwandfrei bedient werden und beim Besuch unserer Bar nicht über die Türschwelle stolpern. (Bugfixing, Testing, Ideation, Arbeitsorganisation, Webserver admin & CoWorking) 
-## Vanessa – Junior developer
-Die köstlichen Cocktails können nur im rechten Ambiente genossen werden. Dafür sorgte Vanessa, indem sie die visuell ansprechende Umgebung unserer Bar gestaltete. (Ideation, Webdesign, ReadMe, Teamvorstellung)
+Abgesehen von Hilfsmittel aus dem Internet halfen uns die Codes aus dem Unterricht. Insbesondere aus der Vorlesung „Live Coding der Pokémon-Seite“ konnten Codeteile kopiert und in abgeänderte Art auf unserer Seite integriert werden. So kam ein Arbeitsprozess zustande, der effizient war und durch diverse Hilfsmittel optimiert wurde.

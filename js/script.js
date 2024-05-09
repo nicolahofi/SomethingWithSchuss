@@ -1,9 +1,8 @@
-/*
-    general init function
- */
+
+//___________________________________________________________
+//Grundfunktionen
+//___________________________________________________________
 async function init() {
-  // Fetch the ingredients once when the page loads
-  ingredients = await fetchAllIngredients();
 
   // Fetch and display a random drink
   fetchRandomDrink();
@@ -12,15 +11,22 @@ async function init() {
   clearOldLocalStorage();
 
   // Event listeners
+  // Fetch the ingredients once when the page loads
+  let ingredientInfoBtn = document.querySelector('#info-icon');
+  let ingredientInfoBox = document.querySelector('#info-ingredients'); // Assuming you have an element to display the info
+  let ingredients = null;
+
+  ingredients = await fetchAllIngredients();
+
   ingredientInfoBtn.addEventListener('mouseover', function() {
     if (ingredients) {
       ingredientInfoBox.innerHTML = "<b>mögliche Zutaten:</b> " + ingredients;
-      ingredientInfoBox.style.display = 'block'; // Show the info box
+      ingredientInfoBox.style.display = 'block';
     }
   });
 
   ingredientInfoBtn.addEventListener('mouseout', function() {
-    ingredientInfoBox.style.display = 'none'; // Hide the info box
+    ingredientInfoBox.style.display = 'none';
   });
 
   let fetchPersonBtn = document.querySelector('#personalDrinkButton');
@@ -30,9 +36,15 @@ async function init() {
   searchCocktailsByIngredient.addEventListener('click', searchCocktails);
 
   document.querySelector('#personalArea').style.display = 'none';
+
+  // build team info
+  team();
 }
 
-init();
+// execute init function when the page is loaded
+document.addEventListener('DOMContentLoaded', function () {
+  init();
+});
 
 
 // Function to remove localStorage entries older than a week
@@ -50,6 +62,26 @@ function clearOldLocalStorage() {
       }
   }
 }
+
+function team() {
+  var teamMembers = document.getElementsByClassName('teamMember');
+
+  for (var i = 0; i < teamMembers.length; i++) {
+    (function(i) {
+      var img = teamMembers[i].getElementsByTagName('img')[0];
+      var info = teamMembers[i].getElementsByClassName('teaminfo')[0];
+
+      img.addEventListener('mouseover', function() {
+        info.style.display = 'block';
+      });
+
+      img.addEventListener('mouseout', function() {
+        info.style.display = 'none';
+      });
+    })(i);
+  }
+}
+
 
 // Function to fetch and display a random drink
 async function fetchRandomDrink() {
@@ -71,22 +103,11 @@ function displayDrink(drink) {
   let drinkImage = drink.strDrinkThumb;
   let drinkName = drink.strDrink;
   let instructions = drink.strInstructionsDE ? drink.strInstructionsDE : drink.strInstructions;
-  let ingredients = [];
-
-  for (let i = 1; i <= 15; i++) {
-      let ingredient = drink['strIngredient' + i];
-      let measure = drink['strMeasure' + i];
-      measure = converter(measure);
-
-      if (ingredient && measure) {
-          ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
-      }
-  }
 
   document.getElementById('drinkImage').src = drinkImage;
   document.getElementById('drinkName').textContent = `${drinkName}`;
   document.getElementById('drinkInstructions').textContent = `${instructions}`;
-  document.getElementById('drinkIngredients').innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
+  document.getElementById('drinkIngredients').innerHTML = getIngredientsList(drink);
 }
 
 
@@ -113,81 +134,57 @@ async function fetchPersonalDrink() {
   if (drinks && drinks.length > 0) {
       let randomIndex = Math.floor(Math.random() * drinks.length);
       let drink = drinks[randomIndex];
-      displayPersonalDrink(drink, name);
+      displayPersonalDrink(drink);
   } else {
-      document.getElementById('persDrinkName').textContent = `Tschuldigung, ${name} hüt gits nüt für di.`;
+      document.getElementById('persDrinkError').textContent = `Tschuldigung, ${name} hüt gits nüt für di.`;
+      document.querySelector('#personalArea').style.display = 'none';
   }
 }
 
 // Function to display a personalized drink
-function displayPersonalDrink(drink, name) {
-  let drinkName = drink.strDrink;
-  let instructions = drink.strInstructionsDE ? drink.strInstructionsDE : drink.strInstructions;
-  let ingredients = [];
-
-  for (let i = 1; i <= 15; i++) {
-      let ingredient = drink['strIngredient' + i];
-      let measure = drink['strMeasure' + i];
-      measure = converter(measure);
-
-      if (ingredient && measure) {
-          ingredients.push(`${measure.trim()} ${ingredient.trim()}`);
-      }
-  }
-
+function displayPersonalDrink(drink) {
+  
   // remove img if already existing
   let existingImg = document.getElementById('persDrinkImg');
   if (existingImg) {
     existingImg.remove();
   }
 
+  // build personal drink image
   let persDrinkImg = document.createElement('img');
   persDrinkImg.id = 'persDrinkImg';
   persDrinkImg.src = drink.strDrinkThumb;
-  persDrinkImg.alt = drinkName;
+  persDrinkImg.alt = drink.strDrink;
 
   document.getElementById('persDrinkImgDiv').appendChild(persDrinkImg);
-  // document.getElementById('persDrinkName').textContent = `Diis persönlicha Gsöff für ${name}: ${drinkName}`;
-  document.getElementById('persDrinkName').textContent = `${drinkName}`;
-  document.getElementById('persDrinkInstructions').textContent = `${instructions}`;
-  document.getElementById('persDrinkIngredients').innerHTML = ingredients.map(ingredient => `<li>${ingredient}</li>`).join('');
+  document.getElementById('persDrinkName').textContent = `${drink.strDrink}`;
+  document.getElementById('persDrinkInstructions').textContent = `${drink.strInstructionsDE ? drink.strInstructionsDE : drink.strInstructions}`;
+  document.getElementById('persDrinkIngredients').innerHTML = getIngredientsList(drink);
 }
 
 
 
 
 // get all possible ingredients for the info box
-
-let ingredientInfoBtn = document.querySelector('#info-icon');
-let ingredientInfoBox = document.querySelector('#info-ingredients'); // Assuming you have an element to display the info
-let ingredients = null;
-
 async function fetchAllIngredients() {
   const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
   const data = await fetchData(url);
   const drinks = data.drinks;
 
-  let ingredients = new Set();
+  let ingredients = [];
 
   drinks.forEach(drink => {
     for (let i = 1; i <= 15; i++) {
       let ingredient = drink['strIngredient' + i];
       if (ingredient) {
-        ingredients.add(ingredient.trim().toLowerCase());
+        ingredients.push(ingredient.trim().toLowerCase());
       }
     }
   });
 
-  let ingredientsArray = Array.from(ingredients);
-  let ingredientsString = ingredientsArray.join(', ');
+  let ingredientsString = ingredients.join(', ');
   return ingredientsString;
 }
-
-// Fetch the ingredients once when the page loads
-window.addEventListener('load', async function() {
-  ingredients = await fetchAllIngredients();
-});
-
 
 
 
@@ -198,6 +195,7 @@ window.addEventListener('load', async function() {
 async function searchCocktails() {
   let ingredientsInput = document.getElementById('ingredientsInput').value.trim();
 
+  // error handling
   if (!ingredientsInput) {
       document.getElementById('leftoverDrinkError').innerText = 'muasch zerst öppis iigeh';
       return;
@@ -237,9 +235,9 @@ async function searchCocktails() {
 // Function to display found cocktails
 function displayCocktails(drinks) {
   let cocktailContainer = document.getElementById('cocktailTable');
-  cocktailContainer.innerHTML = ''; // Clear previous results
+  cocktailContainer.innerHTML = '';
 
- drinks.forEach(drink => {
+  drinks.forEach(drink => {
   let drinkDiv = document.createElement('div');
   drinkDiv.classList.add('drink');
 
@@ -248,6 +246,7 @@ function displayCocktails(drinks) {
   image.alt = drink.strDrink + " Image";
   drinkDiv.appendChild(image);
 
+  // build name link
   let nameLink = document.createElement('a');
   nameLink.href = '#';
   nameLink.textContent = drink.strDrink;
@@ -259,6 +258,7 @@ function displayCocktails(drinks) {
   let detailsVisible = false;
   let detailsElement = null;
 
+  // click on name link
   nameLink.addEventListener('click', async function(e) {
     e.preventDefault();
 
@@ -268,15 +268,31 @@ function displayCocktails(drinks) {
       let details = data.drinks[0];
       detailsElement = document.createElement('div');
 
-      let instruction = document.createElement('p');
-      let insturction = details.strInstructionsDE ? details.strInstructionsDE : details.strInstructions;
-      instruction.innerHTML = `<h4>Zubereitung</h4><p style='color: #888;'>${insturction}</p>`;
+      // build instruction
+      let instruction = document.createElement('div');
+      let instructionTitle = document.createElement('h4');
+      instructionTitle.textContent = 'Zubereitung';
+      let instructionText = document.createElement('p');
+      instructionText.style.color = '#888';
+      instructionText.textContent = details.strInstructionsDE ? details.strInstructionsDE : details.strInstructions;
+      
+      instruction.appendChild(instructionTitle);
+      instruction.appendChild(instructionText);
 
+      // build ingredients list
+      let ingredients = document.createElement('div');
+      let ingredientsTitle = document.createElement('h4');
+      ingredientsTitle.textContent = 'Zutaten';
+      ingredientsTitle.style.color = 'white';
       let ingredientsList = document.createElement('ul');
-      ingredientsList.innerHTML = `<h4 style='color: white;'>Zutaten</h4>`+ getIngredientsList(details);
+      ingredientsList.innerHTML = getIngredientsList(details);
+
+      ingredients.appendChild(ingredientsTitle);
+      ingredients.appendChild(ingredientsList);
+
 
       detailsElement.appendChild(instruction);
-      detailsElement.appendChild(ingredientsList);
+      detailsElement.appendChild(ingredients);
       nameLink.parentElement.appendChild(detailsElement);
 
       detailsVisible = true;
@@ -292,6 +308,7 @@ function displayCocktails(drinks) {
 
 }
 
+// function to get ingredients list
 function getIngredientsList(details) {
   let ingredients = [];
   for (let i = 1; i <= 15; i++) {
@@ -300,6 +317,8 @@ function getIngredientsList(details) {
     measure = converter(measure);
     if (ingredient && measure) {
       ingredients.push(`<li>${measure.trim()} ${ingredient.trim()}</li>`);
+    } else if (ingredient) {
+      ingredients.push(`<li>${ingredient.trim()}</li>`);
     }
   }
   return ingredients.join('');
@@ -318,7 +337,10 @@ function converter(measure) {
     }
   }
   if (measure && measure.toLowerCase().includes('tsp')) {
-    measure = measure.replace('tsp', 'Teelöfel').trim();
+    measure = measure.replace('tsp', 'Tl').trim();
+  }
+  if (measure && measure.toLowerCase().includes('tbsp')) {
+    measure = measure.replace('tbsp', 'El').trim();
   }
 
   return measure;
