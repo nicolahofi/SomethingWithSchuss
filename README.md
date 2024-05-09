@@ -1,15 +1,7 @@
-# somethingWithSchuss
+# öppis mit Schuss
 
 ## API-Link
 https://www.thecocktaildb.com/api.php
-
-## Titel
-something with schuss
-
-## Ideen
-- nach zutaten suchen und passenden Drink zurückgeben
-- lieblingsdrinks
-- vorname (evt geburtsdatum) eingeben und drink mit anfangsbuchstaben zurückgeben
 
 ## Kurzbeschreibung Projekt
 SomethingWithSchuss ist eine Website, welche die Vielfalt der Cocktailwelt präsentieren soll. Das Ganze ist basierend auf folgender API: https://www.thecocktaildb.com/api.php. Gestützt auf den gegebenen Daten haben wir uns entschieden, eine Onepager zu gestalten, der in drei Teile gegliedert ist („Gsöff vom Tag“, „diis persönlichs Gsöff“ und „überblibs Gsöff“). Durch die Eingabe vom Namen der UserInnen und den noch vorhandenen Lebensmittelresten zu Hause sollen individualisierte Drinks generiert werden. So entdeckt man möglicherweise eine neue Kreation, die Potential eines neuen persönlichen Favorits hat. Mit der simplen und übersichtlichen Auflistung von Zutaten sowie einem Kurzbeschrieb zur Zubereitung sollen die Getränke im besten Fall direkt umgesetzt werden können. In diesem Sinne, viel Spass beim sich inspirieren lassen und PROST!
