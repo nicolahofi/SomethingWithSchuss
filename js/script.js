@@ -339,8 +339,8 @@ function converter(measure) {
   if (measure && measure.toLowerCase().includes('tsp')) {
     measure = measure.replace('tsp', 'Tl').trim();
   }
-  if (measure && measure.toLowerCase().includes('tbsp')) {
-    measure = measure.replace('tbsp', 'El').trim();
+  if (measure && measure.toLowerCase().includes('tblsp')) {
+    measure = measure.replace('tblsp', 'El').trim();
   }
 
   return measure;
