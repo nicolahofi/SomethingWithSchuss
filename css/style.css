@@ -16,9 +16,31 @@ main {
   */
 
 header{
-    background-color: #333;
-    color: #fff;
+    color: orange;
     padding: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+#headerBG{
+  opacity: 0.2;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  z-index: -100;
+}
+
+.headerh1 {
+  z-index: 100;
+  opacity: 1;
+  background-color: black;
+  width: 20%;
+  margin: auto;
+  padding: 5px;
+  border: 3px dotted orange;
+  border-radius: 3%;
 }
 
 h1{
@@ -62,7 +84,7 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 20px;  
 }
 
 .teamMember {
@@ -70,12 +92,17 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 5%;
 }
 
 #team img {
-  width: 300px;
+  width: 100%;
   height: auto;
-  margin-bottom: 20px;
+  object-fit: contain;
+  margin: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -222,6 +249,7 @@ figure.teamMember:hover figcaption::before {
     flex-direction: column;
     margin-top: 20px;
     text-align: center;
+
   }
 
   #randomDrink img {
@@ -245,6 +273,7 @@ figure.teamMember:hover figcaption::before {
       margin: 1%;
       color: white;
       width: 500px;
+
   }
 
   .titleAndContentCenter{
@@ -368,7 +397,7 @@ figure.teamMember:hover figcaption::before {
   }
 
 .errortext {
-    color: red;
+    color: orange;
     font-size: 12px;
     margin-top: 5px;
 }
@@ -431,7 +460,7 @@ figure.teamMember:hover figcaption::before {
     display: inline-block;
     width: 20px;
     height: 20px;
-    background-color: #007bff;
+    background-color: orange;
     color: #fff;
     text-align: center;
     border-radius: 50%;
@@ -472,6 +501,7 @@ figure.teamMember:hover figcaption::before {
     width: 80%;
     margin-left: 10%;
     margin-right: 10%;
+
   }
   
   .drink {
@@ -529,8 +559,185 @@ figure.teamMember:hover figcaption::before {
 
 /* Footer */
 footer {
-    background-color: #333;
+    background-color: rgb(226, 158, 31);
     color: #fff;
     text-align: center;
     padding: 20px;
 }
+
+
+@media (max-width: 600px) {
+
+  .headerh1 {
+    z-index: 100;
+    opacity: 1;
+    background-color: black;
+    width: auto;
+    margin: auto;
+    padding: 5px;
+    border: 3px dotted orange;
+    border-radius: 3%;
+  }
+
+  
+
+/*________________________________random drink______________________________*/
+  #randomDrink {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    display: inline-block;
+  }
+
+  #randomDrink img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 10%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #titleAndContent {
+    width: 50%;
+  }
+
+  #drinkName {
+    font-size: 140%;
+  }
+
+  #drinkInstructions {
+    font-size: 100%;
+    padding: 0 10px;
+  }
+
+  #drinkIngredients {
+    font-size: 90%;
+    padding: 0 10px;
+  }
+
+/*_____________________________personal drink____________________________*/
+
+  #persDrink {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  #persDrink input {
+    width: 50%;
+  }
+
+  #personalArea {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  #persDrinkName {
+    font-size: 140%;
+  }
+
+  #persDrinkImgDiv img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 10%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #persDrinkInstructions {
+    font-size: 100%;
+    padding: 0 10px;
+  }
+
+  #persDrinkIngredients {
+    font-size: 90%;
+    padding: 0 10px;
+  }
+
+/*_____________________________leftover____________________________*/
+
+  #leftoverdrink {
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  #leftoverdrink input {
+    width: 50%;
+  }
+
+
+  #cocktailTable {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    border: rgb(205, 142, 27);
+
+  }
+
+  #cocktailTable div {
+    width: 100%;
+
+  }
+
+  #cocktailTable img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin: 0;
+    border-radius: 10%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+/*_____________________________team____________________________*/
+
+  #teamsection {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+  
+  #team {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  #team img {
+    width: 200px;
+    height: auto;
+    padding: 10px;
+    border-radius: 10%;
+  }
+
+  #teamsection h2 {
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 0;
+  }
+
+  #team p {
+    font-size: 70%;
+  }
+
+}
+
+
+
+
+

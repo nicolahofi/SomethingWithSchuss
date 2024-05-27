@@ -65,19 +65,30 @@ function clearOldLocalStorage() {
 
 function team() {
   var teamMembers = document.getElementsByClassName('teamMember');
+  var isMobile = window.matchMedia('(max-width: 767px)').matches;
 
   for (var i = 0; i < teamMembers.length; i++) {
     (function(i) {
       var img = teamMembers[i].getElementsByTagName('img')[0];
       var info = teamMembers[i].getElementsByClassName('teaminfo')[0];
 
-      img.addEventListener('mouseover', function() {
-        info.style.display = 'block';
-      });
+      if (isMobile) {
+        img.addEventListener('click', function() {
+          if (info.style.display === 'block') {
+            info.style.display = 'none';
+          } else {
+            info.style.display = 'block';
+          }
+        });
+      } else {
+        img.addEventListener('mouseover', function() {
+          info.style.display = 'block';
+        });
 
-      img.addEventListener('mouseout', function() {
-        info.style.display = 'none';
-      });
+        img.addEventListener('mouseout', function() {
+          info.style.display = 'none';
+        });
+      }
     })(i);
   }
 }
@@ -223,7 +234,7 @@ async function searchCocktails() {
   let uniqueFinalDrinks = finalDrinks.filter((drink, index) => index === finalDrinks.findIndex(d => d.strDrink === drink.strDrink));
 
   if (uniqueFinalDrinks.length === 0) {
-      document.getElementById('leftoverDrinkError').innerText = 'Mit dera Zuatat gits kai Gsöff. (du alki)';
+      document.getElementById('leftoverDrinkError').innerText = 'Mit dera Zuatat gits kai Gsöff. (du Alki)';
   } else {
       displayCocktails(uniqueFinalDrinks);
   }
