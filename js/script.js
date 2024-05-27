@@ -1,7 +1,5 @@
 
-//___________________________________________________________
 //Grundfunktionen
-//___________________________________________________________
 async function init() {
 
   // Fetch and display a random drink
@@ -18,16 +16,46 @@ async function init() {
 
   ingredients = await fetchAllIngredients();
 
-  ingredientInfoBtn.addEventListener('mouseover', function() {
-    if (ingredients) {
-      ingredientInfoBox.innerHTML = "<b>mögliche Zutaten:</b> " + ingredients;
-      ingredientInfoBox.style.display = 'block';
+  function setupIngredientInfoEvents(ingredientInfoBtn, ingredientInfoBox, ingredients) {
+    // Function to detect if the user is on a mobile device
+    function isMobileDevice() {
+      return /Mobi|Android/i.test(navigator.userAgent);
     }
-  });
-
-  ingredientInfoBtn.addEventListener('mouseout', function() {
-    ingredientInfoBox.style.display = 'none';
-  });
+  
+    if (isMobileDevice()) {
+      // For mobile devices, use 'click' event on both the button and the info box
+      ingredientInfoBtn.addEventListener('click', function() {
+        if (ingredients) {
+          if (ingredientInfoBox.style.display === 'block') {
+            ingredientInfoBox.style.display = 'none';
+          } else {
+            ingredientInfoBox.innerHTML = "<b>mögliche Zutaten:</b> " + ingredients;
+            ingredientInfoBox.style.display = 'block';
+          }
+        }
+      });
+  
+      ingredientInfoBox.addEventListener('click', function() {
+        ingredientInfoBox.style.display = 'none';
+      });
+  
+    } else {
+      // For non-mobile devices, use 'mouseover' and 'mouseout' events
+      ingredientInfoBtn.addEventListener('mouseover', function() {
+        if (ingredients) {
+          ingredientInfoBox.innerHTML = "<b>mögliche Zutaten:</b> " + ingredients;
+          ingredientInfoBox.style.display = 'block';
+        }
+      });
+  
+      ingredientInfoBtn.addEventListener('mouseout', function() {
+        ingredientInfoBox.style.display = 'none';
+      });
+    }
+  }
+  
+  setupIngredientInfoEvents(ingredientInfoBtn, ingredientInfoBox, ingredients);
+      
 
   let fetchPersonBtn = document.querySelector('#personalDrinkButton');
   fetchPersonBtn.addEventListener('click', fetchPersonalDrink);
@@ -40,6 +68,7 @@ async function init() {
   // build team info
   team();
 }
+
 
 // execute init function when the page is loaded
 document.addEventListener('DOMContentLoaded', function () {
@@ -63,6 +92,8 @@ function clearOldLocalStorage() {
   }
 }
 
+
+// Function to display team info
 function team() {
   var teamMembers = document.getElementsByClassName('teamMember');
   var isMobile = window.matchMedia('(max-width: 1080px)').matches;
@@ -109,6 +140,7 @@ async function fetchRandomDrink() {
   }
 }
 
+
 // Function to display a drink
 function displayDrink(drink) {
   let drinkImage = drink.strDrinkThumb;
@@ -122,9 +154,7 @@ function displayDrink(drink) {
 }
 
 
-/*
-    Function to fetch and display a personalized drink
- */
+//Function to fetch and display a personalized drink
 async function fetchPersonalDrink() {
 
   document.querySelector('#personalArea').style.display = 'block';
@@ -152,6 +182,7 @@ async function fetchPersonalDrink() {
   }
 }
 
+
 // Function to display a personalized drink
 function displayPersonalDrink(drink) {
   
@@ -172,8 +203,6 @@ function displayPersonalDrink(drink) {
   document.getElementById('persDrinkInstructions').textContent = `${drink.strInstructionsDE ? drink.strInstructionsDE : drink.strInstructions}`;
   document.getElementById('persDrinkIngredients').innerHTML = getIngredientsList(drink);
 }
-
-
 
 
 // get all possible ingredients for the info box
@@ -198,11 +227,7 @@ async function fetchAllIngredients() {
 }
 
 
-
-/*
-    Function to search cocktails by ingredients
- */
-
+//Function to search cocktails by ingredients
 async function searchCocktails() {
   let ingredientsInput = document.getElementById('ingredientsInput').value.trim();
 
@@ -239,8 +264,6 @@ async function searchCocktails() {
       displayCocktails(uniqueFinalDrinks);
   }
 }
-
-
 
 
 // Function to display found cocktails
@@ -319,6 +342,7 @@ function displayCocktails(drinks) {
 
 }
 
+
 // function to get ingredients list
 function getIngredientsList(details) {
   let ingredients = [];
@@ -334,6 +358,7 @@ function getIngredientsList(details) {
   }
   return ingredients.join('');
 }
+
 
 // Function to convert measure units
 function converter(measure) {
@@ -356,6 +381,7 @@ function converter(measure) {
 
   return measure;
 }
+
 
 // Function to fetch data from API
 async function fetchData(url) {

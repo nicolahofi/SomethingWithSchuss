@@ -1,4 +1,6 @@
-/* Allgemeine Stildefinitionen */
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
+
+/*______________________Allgemeine Stilinformationen______________________*/
 body {
     font-family: 'roboto', sans-serif;
     margin: 0;
@@ -11,18 +13,16 @@ body {
 main {
     background-color: black;
 }
-  /*
-        HEADER
-  */
+/*_________________________________Header_________________________________*/
 
-header{
+header {
     color: orange;
     padding: 20px;
     overflow: hidden;
     position: relative;
 }
 
-#headerBG{
+#headerBG {
   opacity: 0.2;
   position: absolute;
   left: 0;
@@ -43,14 +43,14 @@ header{
   border-radius: 3%;
 }
 
-h1{
+h1 {
     text-align: center;
     font-family: "chaloops", sans-serif;
     font-weight: 700;
     font-style: normal;
 }
 
-/* Hauptinhalt */
+/*_________________________________Generell_________________________________*/
 main {
     padding: 40px;
 }
@@ -61,25 +61,23 @@ section {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 50px;
-  }
+}
   
-  h2 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center;
+h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: "chaloops", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
 
-    font-family: "chaloops", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-  }
+h4 {
+  color: white;
+}
 
-  h4 {
-    color: white;
-  }
-
-/* Team */
-
+/*___________________________________Team___________________________________*/
 #team {
   display: flex;
   justify-content: center;
@@ -105,8 +103,6 @@ section {
   margin-right: auto;
 }
 
-
-@import url(https://fonts.googleapis.com/css?family=Raleway:400,200,300,800);
 figure.teamMember {
   color: #fff;
   position: relative;
@@ -119,15 +115,18 @@ figure.teamMember {
   background: #000000;
   text-align: center;
 }
+
 figure.teamMember * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 figure.teamMember img {
   opacity: 1;
   -webkit-transition: opacity 0.35s;
   transition: opacity 0.35s;
 }
+
 figure.teamMember figcaption {
   position: absolute;
   top: 0;
@@ -136,6 +135,7 @@ figure.teamMember figcaption {
   height: 100%;
   text-align: left;
 }
+
 figure.teamMember figcaption > div {
   float: left;
   height: 100%;
@@ -143,6 +143,7 @@ figure.teamMember figcaption > div {
   width: 50%;
   position: relative;
 }
+
 figure.teamMember figcaption::before {
   position: absolute;
   top: 50%;
@@ -157,7 +158,8 @@ figure.teamMember figcaption::before {
   -webkit-transition-delay: 0.6s;
   transition-delay: 0.6s;
 }
-figure.teamMember h3,
+
+figure.teamMember h3, 
 figure.teamMember p {
   margin: 0;
   padding: 10px;
@@ -169,6 +171,7 @@ figure.teamMember p {
   -webkit-transition: opacity 0.45s, -webkit-transform 0.45s;
   transition: opacity 0.45s,-webkit-transform 0.45s,-moz-transform 0.45s,-o-transform 0.45s,transform 0.45s;
 }
+
 figure.teamMember h3 {
   font-size: 17px;
   color: white;
@@ -184,9 +187,11 @@ figure.teamMember h3 {
   -webkit-transition-delay: 0s;
   transition-delay: 0s;
 }
+
 figure.teamMember h3 span {
   font-weight: 800;
 }
+
 figure.teamMember p {
   font-size: 13px;
   display: block;
@@ -201,6 +206,7 @@ figure.teamMember p {
   -webkit-transition-delay: 0s;
   transition-delay: 0s;
 }
+
 figure.teamMember a {
   left: 0;
   right: 0;
@@ -209,9 +215,11 @@ figure.teamMember a {
   position: absolute;
   color: #ffffff;
 }
+
 figure.teamMember:hover img {
   opacity: 0.7;
 }
+
 figure.teamMember:hover figcaption h3,
 figure.teamMember:hover figcaption p {
   -webkit-transform: translate3d(0%, 0%, 0);
@@ -219,12 +227,15 @@ figure.teamMember:hover figcaption p {
   -webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
 }
+
 figure.teamMember:hover figcaption h3 {
   opacity: 1;
 }
+
 figure.teamMember:hover figcaption p {
   opacity: 1;
 }
+
 figure.teamMember:hover figcaption::before {
   background: #ffffff;
   top: 0px;
@@ -234,14 +245,7 @@ figure.teamMember:hover figcaption::before {
   transition-delay: 0s;
 }
 
-
-
-
-
-
-
-/* randomDrink */
-
+/*________________________________RandomDrink________________________________*/
 #randomDrink {
     display: flex;
     justify-content: center;
@@ -249,71 +253,69 @@ figure.teamMember:hover figcaption::before {
     flex-direction: column;
     margin-top: 20px;
     text-align: center;
-
   }
 
-  #randomDrink img {
-    width: 250px;
-    height: auto;
-    border-radius: 10%;
-  }
+#randomDrink img {
+  width: 250px;
+  height: auto;
+  border-radius: 10%;
+}
 
-  .nameImg{
+.nameImg{
+  display: flex;
+}
+
+.insIng{
     display: flex;
-  }
+}
 
-  .insIng{
-      display: flex;
-  }
-
-  .titleAndContent{
-      flex: 1;
-      padding: 1%;
-      background-color: black;
-      border-radius: 10px;
-      margin: 1%;
-      color: white;
-      width: 500px;
-  }
-
-  .titleAndContentCenter{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  #drinkName {
-    font-size: 40px;
+.titleAndContent{
+    flex: 1;
+    padding: 1%;
+    background-color: black;
+    border-radius: 10px;
+    margin: 1%;
     color: white;
-    text-align: center;
-  }
+    width: 500px;
+}
 
-  #drinkInstructions {
-    font-size: 18px;
-    color: #888;
-    text-align: center;
-  }
+.titleAndContentCenter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
-  #drinkIngredients {
-    font-size: 16px;
-    color: #888;
-    margin-bottom: 20px;
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  #drinkIngredients li {
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  #drinkIngredients li:last-child {
-    border-bottom: none;
-  }
+#drinkName {
+  font-size: 40px;
+  color: white;
+  text-align: center;
+}
+
+#drinkInstructions {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
+}
+
+#drinkIngredients {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 20px;
+  list-style-type: none;
+  padding: 0;
+}
+
+#drinkIngredients li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+#drinkIngredients li:last-child {
+  border-bottom: none;
+}
  
-/* personalize Drink */
-
+/*_______________________________PersonalDrink_______________________________*/
 #persDrink {
   display: flex;
   justify-content: center;
@@ -357,10 +359,6 @@ figure.teamMember:hover figcaption::before {
 #persDrinkIngredients li:last-child {
   border-bottom: none;
 }
-
-
-
-
   
 label {
   font-size: 16px;
@@ -387,11 +385,11 @@ input[type="text"] {
   margin-top: 10px;
   color: #161616;
   transition: background-color 70ms cubic-bezier(.2,0,.38,.9),outline 70ms cubic-bezier(.2,0,.38,.9);  
-  :focus{
-      outline: 2px solid #0f62fe;
-      outline-offset: -2px;
-  }
+}
 
+input[type="text"]:focus{
+  outline: 2px solid #0f62fe;
+  outline-offset: -2px;
 }
 
 .errortext {
@@ -442,12 +440,7 @@ input[type="text"] {
   box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
 
-  /*
-        LEFTOVER
-  */
-
-
-  /*  info icon */
+/*_______________________________LeftoverDrink_______________________________*/
 #info-icon {
   display: inline-block;
   width: 20px;
@@ -484,72 +477,69 @@ input[type="text"] {
   text-align: center;
 }
 
-  
-  #cocktailTable {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+#cocktailTable {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
 
-  }
+}
   
-  .drink {
-    width: calc(27% - 10px);
-    margin: 10px;
-    background-color: black;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .drink img {
-    width: 200px;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 10%;
-  }
-  
-  .drink a {
-    font-size: 18px;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .drink a:hover {
-    text-decoration: underline;
-  }
-  
-  .drink div {
-    margin-top: 10px;
-  }
-  
-  .drink p {
-    color: white;
-  }
+.drink {
+  width: calc(27% - 10px);
+  margin: 10px;
+  background-color: black;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
+.drink img {
+  width: 200px;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 10%;
+}
 
+.drink a {
+  font-size: 18px;
+  color: white;
+  text-decoration: none;
+}
 
-  .drink ul {
-    font-size: 16px;
-    color: #888;
-    margin-bottom: 20px;
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .drink ul li {
-    color: #888;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .drink ul li:last-child {
-    border-bottom: none;
-  }
+.drink a:hover {
+  text-decoration: underline;
+}
 
-/* Footer */
+.drink div {
+  margin-top: 10px;
+}
+
+.drink p {
+  color: white;
+}
+
+.drink ul {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 20px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.drink ul li {
+  color: #888;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.drink ul li:last-child {
+  border-bottom: none;
+}
+
+/*__________________________________Footer__________________________________*/
 footer {
     background-color: rgb(226, 158, 31);
     color: #fff;
@@ -886,6 +876,9 @@ footer {
     font-size: 50%;
   }
 
+  figure.teamMember h3 {
+    font-size: 14px;
+  }
 }
 
 /*________________________________uwide query______________________________*/
