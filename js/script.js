@@ -65,7 +65,7 @@ function clearOldLocalStorage() {
 
 function team() {
   var teamMembers = document.getElementsByClassName('teamMember');
-  var isMobile = window.matchMedia('(max-width: 767px)').matches;
+  var isMobile = window.matchMedia('(max-width: 1080px)').matches;
 
   for (var i = 0; i < teamMembers.length; i++) {
     (function(i) {
